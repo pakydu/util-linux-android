@@ -21,6 +21,7 @@
 
 #include "path.h"
 
+
 /**
  * sysfs_devname_sys_to_dev:
  * @name: devname to be converted in place
@@ -123,4 +124,11 @@ enum sysfs_byteorder {
 extern enum sysfs_byteorder sysfs_get_byteorder(struct path_cxt *pc);
 extern int sysfs_get_address_bits(struct path_cxt *pc);
 
+//paky add for android-linux
+typedef enum {
+       OS_LINUX,
+       OS_ANDROID
+} os_type;
+
+os_type  sysfs_get_os_type(void);//paky add for android-linux
 #endif /* UTIL_LINUX_SYSFS_H */
