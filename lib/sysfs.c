@@ -1022,9 +1022,19 @@ char *sysfs_blkdev_get_path(struct path_cxt *pc, char *buf, size_t bufsiz)
 	if (sz + sizeof("/dev/") > bufsiz)
 		goto done;
 
-	/* create the final "/dev/<name>" string */
-	memmove(buf + 5, name, sz + 1);
-	memcpy(buf, "/dev/", 5);
+	//paky add for android-linux
+        if (sysfs_get_os_type() == OS_LINUX)
+	{
+		/* create the final "/dev/<name>" string */
+		memmove(buf + 5, name, sz + 1);
+		memcpy(buf, "/dev/", 5);
+	}
+	else
+	{
+		/* android rootfs: create the final "/dev/block/<name>" string */
+                memmove(buf + 11, name, sz + 1);
+                memcpy(buf, "/dev/block/", 11);
+	}
 
 	if (!stat(buf, &st) && S_ISBLK(st.st_mode) && st.st_rdev == sysfs_blkdev_get_devno(pc))
 		res = buf;
@@ -1156,6 +1166,14 @@ int sysfs_get_address_bits(struct path_cxt *pc)
 	if (address_bits < 0)
 		return -EINVAL;
 	return address_bits;
+}
+
+os_type  sysfs_get_os_type()
+{
+       os_type type = OS_LINUX;
+       if (access("/system/bin/linker", F_OK) == 0 || access("/system/bin/linker64", F_OK) ==0)
+               type = OS_ANDROID;
+       return type;
 }
 
 
