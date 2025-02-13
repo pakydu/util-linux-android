@@ -138,3 +138,11 @@ WORKFLOW EXAMPLE:
                                       ...
                                     - Release v<X.Y>.2
 
+
+Tools list:
+
+    blkid   fdisk    fsck   losetup  lslocks   mkswap   prlimit    rfkill     swapon   uuidparse
+    cfdisk  fincore  fstrim  lsblk    lslogins  mount      sfdisk     umount   wdctl
+    column  findfs   lscpu    lsmem     mountpoint   swaplabel  uuidd    wipefs
+    eject   findmnt  lsipc    lsns      partx   swapoff    uuidgen  zramctl
+
