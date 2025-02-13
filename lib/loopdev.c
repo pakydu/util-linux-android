@@ -137,8 +137,11 @@ int loopcxt_set_device(struct loopdev_cxt *lc, const char *device)
 				device += 4;
 				dir = _PATH_DEV_LOOP "/";	/* _PATH_DEV uses trailing slash */
 			}
-			snprintf(lc->device, sizeof(lc->device), "%s%s",
-				dir, device);
+			//paky add for android-linux
+			if (sysfs_get_os_type() == OS_LINUX)//if (access(tmp_path, F_OK) == 0)
+                               snprintf(lc->device, sizeof(lc->device), "%s%s",dir, device);
+                        else
+                               snprintf(lc->device, sizeof(lc->device), "/dev/block/%s",device);
 		} else
 			xstrncpy(lc->device, device, sizeof(lc->device));
 
